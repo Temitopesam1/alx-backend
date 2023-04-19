@@ -4,7 +4,7 @@
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """ A caching system
     """
     def put(self, key, item):

@@ -1,45 +1,34 @@
 #!/usr/bin/python3
-""" MRU Caching """
+""" MRUCache module """
 
-from base_caching import BaseCaching
+from collections import OrderedDict
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class MRUCache(BaseCaching):
-    """ MRU caching """
-
+    """A Caching System
+    """
     def __init__(self):
-        """ Constructor """
         super().__init__()
-        self.queue = []
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """ Puts item in cache """
-        if key is None or item is None:
-            return
-
-        self.cache_data[key] = item
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            if self.queue:
-                last = self.queue.pop()
-                del self.cache_data[last]
-                print("DISCARD: {}".format(last))
-
-        if key not in self.queue:
-            self.queue.append(key)
-        else:
-            self.mv_last_list(key)
+        """Add an item in the cache
+        """
+        if key and item:
+            if (key not in self.cache_data.keys()) and \
+                    (len(self.cache_data) >= BaseCaching.MAX_ITEMS):
+                print(f'DISCARD: {list(self.cache_data)[-1]}')
+                self.cache_data.popitem()
+            self.cache_data[key] = item
+            self.cache_data.move_to_end(key, last=True)
+        return
 
     def get(self, key):
-        """ Gets item from cache """
-        item = self.cache_data.get(key, None)
-        if item is not None:
-            self.mv_last_list(key)
-        return item
-
-    def mv_last_list(self, item):
-        """ Moves element to last idx of list """
-        length = len(self.queue)
-        if self.queue[length - 1] != item:
-            self.queue.remove(item)
-            self.queue.append(item)
+        """ Get an item by key
+        """
+        try:
+            self.cache_data.move_to_end(key, last=True)
+            return self.cache_data[key]
+        except Exception:
+            return None

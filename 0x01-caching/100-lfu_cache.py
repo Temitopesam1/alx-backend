@@ -1,71 +1,72 @@
 #!/usr/bin/python3
-""" LFU Caching """
-
-from base_caching import BaseCaching
+"""LFU Caching
+"""
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LFUCache(BaseCaching):
-    """ LFU caching """
-
+    """A caching system
+    """
     def __init__(self):
-        """ Constructor """
         super().__init__()
-        self.queue = []
-        self.counter = {}
-
-    def put(self, key, item):
-        """ Puts item in cache """
-        if key is None or item is None:
-            return
-
-        self.cache_data[key] = item
-
-        item_count = self.counter.get(key, None)
-
-        if item_count is not None:
-            self.counter[key] += 1
+        self.age_dict = {}
+        self.freq_dict = {}
+        self.age = 1
+    
+    def update(self, dict1, dict2, key):
+        dict1[key] = self.age
+        self.age += 1
+        if key not in dict2.keys():
+            dict2[key] = 1
         else:
-            self.counter[key] = 1
+            dict2[key] += 1
+        
+        
+    def least_used_key(self, dictionary):
+        value_list = sorted(dictionary.values())
+        
+        for key, value in dictionary.items():
+            if value == value_list[0]:
+                return key
+    
+    def key_to_remove(self, key):
+        print(f'DISCARD: {key}')
+        self.cache_data.pop(key)
+        self.age_dict.pop(key)
+        self.freq_dict.pop(key)
+        
+        
+    def put(self, key, item):
+        if key and item:
+            
+        
+            if (key not in self.cache_data.keys()) and (len(self.cache_data) >= BaseCaching.MAX_ITEMS):
+            
+                least_recently = self.least_used_key(self.age_dict)
+                least_frequently = self.least_used_key(self.freq_dict)
+                
+                if least_recently == least_frequently:
+                    self.key_to_remove(least_recently)
+                else:
+                    least_val = min(self.freq_dict[least_frequently], self.age_dict[least_recently])
+                    if self.freq_dict[least_frequently] == least_val:
+                        self.key_to_remove(least_frequently)
+                    else:
+                        self.key_to_remove(least_recently)
 
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            first = self.get_first_list(self.queue)
-            if first:
-                self.queue.pop(0)
-                del self.cache_data[first]
-                del self.counter[first]
-                print("DISCARD: {}".format(first))
-
-        if key not in self.queue:
-            self.queue.insert(0, key)
-        self.mv_right_list(key)
-
+                
+            self.cache_data[key] = item
+            self.update(self.age_dict, self.freq_dict, key)
+            # print ('LRU', self.age_dict)
+            # print('LFU', self.freq_dict)
+        
+        
+        
     def get(self, key):
-        """ Gets item from cache """
-        item = self.cache_data.get(key, None)
-        if item is not None:
-            self.counter[key] += 1
-            self.mv_right_list(key)
-        return item
-
-    def mv_right_list(self, item):
-        """ Moves element to the right, taking into account LFU """
-        length = len(self.queue)
-
-        idx = self.queue.index(item)
-        item_count = self.counter[item]
-
-        for i in range(idx, length):
-            if i != (length - 1):
-                nxt = self.queue[i + 1]
-                nxt_count = self.counter[nxt]
-
-                if nxt_count > item_count:
-                    break
-
-        self.queue.insert(i + 1, item)
-        self.queue.remove(item)
-
-    @staticmethod
-    def get_first_list(array):
-        """ Get first element of list or None """
-        return array[0] if array else None
+        if key and key in self.cache_data.keys():
+            self.update(self.age_dict, self.freq_dict, key)
+            # print ('LRU', self.age_dict)
+            # print('LFU', self.freq_dict)
+            return self.cache_data[key]
+        else:
+            return None

@@ -15,7 +15,8 @@ class LRUCache(BaseCaching):
         """Add an item in the cache
         """
         if key and item:
-            if (key not in self.cache_data.keys()) and (len(self.cache_data) >= BaseCaching.MAX_ITEMS):
+            if (key not in self.cache_data.keys()) and \
+                    (len(self.cache_data) >= BaseCaching.MAX_ITEMS):
                 print(f'DISCARD: {list(self.cache_data)[-1]}')
                 self.cache_data.popitem()
             self.cache_data[key] = item

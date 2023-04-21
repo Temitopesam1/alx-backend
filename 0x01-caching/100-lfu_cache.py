@@ -10,7 +10,6 @@ class LFUCache(BaseCaching):
     def __init__(self):
         super().__init__()
         self.freq_dict = {}
-        self.age = 1
 
     def update(self, dictionary, key):
         """ Update dictionary

@@ -17,7 +17,7 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@app.route("/", strict_slashes)
+@app.route("/", strict_slashes=False)
 def hello() -> str:
     """ A function to return HTML template """
     return render_template('1-index.html')

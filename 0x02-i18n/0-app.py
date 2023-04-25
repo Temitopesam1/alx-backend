@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Script of a flask framework project """
-
 from flask import Flask, render_template
 
 
@@ -14,7 +13,7 @@ def get_index() -> str:
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host='0.0.0.0', port=5000)
 # #!/usr/bin/env python3
 # """A Basic Flask app.
 # """

@@ -12,16 +12,18 @@ babel = Babel(app)
 class Config(object):
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCAL = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """ function to get locale """
     return Config.LANGUAGES[0]
 
 
 @app.route("/", strict_slashes=False)
-def hello():
+def hello() -> str:
     """ A function to return HTML template """
     return render_template('1-index.html')
 

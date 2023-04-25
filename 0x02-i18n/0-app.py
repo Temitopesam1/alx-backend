@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 @app.route("/", strict_slashes=False)
-def hello():
+def hello() -> str:
     """ A function to return HTML template  """
     return render_template('0-index.html')
 

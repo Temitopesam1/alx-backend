@@ -9,6 +9,7 @@ from flask import request
 app = Flask(__name__)
 babel = Babel(app)
 
+
 class Config(object):
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
@@ -18,7 +19,6 @@ class Config(object):
 def get_locale():
     """ function to get locale """
     return request.accept_languages.best_match(Config['LANGUAGES'])
-
 
 
 if __name__ == '__main__':

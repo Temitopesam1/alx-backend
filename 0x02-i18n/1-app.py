@@ -12,7 +12,7 @@ babel = Babel(app)
 class Config(object):
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
-    TIMEZONE = "UTF"
+#     TIMEZONE = "UTF"
 
 
 @babel.localeselector
@@ -21,9 +21,9 @@ def get_locale():
     return Config.LANGUAGES[0]
 
 
-@babel.timezoneselector
-def get_timezone():
-    return Config.TIMEZONE
+# @babel.timezoneselector
+# def get_timezone():
+#     return Config.TIMEZONE
 
 
 @app.route("/", strict_slashes=False)

@@ -6,16 +6,15 @@ from flask_babel import Babel
 from flask import request
 
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
 class Config:
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
+
+app = Flask(__name__)
+babel = Babel(app)
 
 @babel.localeselector
 def get_locale() -> str:

@@ -13,11 +13,11 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.url_map.strict_slashes = False
+# app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
-@app.route("/")
+@app.route("/", strict_slashes)
 def hello() -> str:
     """ A function to return HTML template """
     return render_template('1-index.html')

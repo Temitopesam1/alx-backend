@@ -15,6 +15,7 @@ class Config:
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
 babel = Babel(app)
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},

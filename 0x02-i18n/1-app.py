@@ -21,5 +21,11 @@ def get_locale():
     return request.accept_languages.best_match(Config['LANGUAGES'])
 
 
+@app.route("/", strict_slashes=False)
+def hello():
+    """ A function to return HTML template """
+    return render_template('1-index.html')
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)

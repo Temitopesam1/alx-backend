@@ -17,7 +17,7 @@ babel = Babel(app)
 
 
 @app.route("/", strict_slashes=False)
-def hello() -> str:
+def get_index() -> str:
     """ A function to return HTML template """
     return render_template('1-index.html')
 

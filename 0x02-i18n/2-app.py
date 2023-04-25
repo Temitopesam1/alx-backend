@@ -7,7 +7,7 @@ from flask import request
 
 
 app = Flask(__name__)
-babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
+babel = Babel(app)
 
 
 class Config(object):
@@ -15,8 +15,10 @@ class Config(object):
     LANGUAGES = ['en', 'fr']
 
 
-app = Flask(__name__)
-babel = Babel(app, locale_selector=Config.LANGUAGES[0], timezone_selector='UTC')
+@babel.localeselector
+def get_locale():
+    """ function to get locale """
+    return request.accept_languages.best_match(Config['LANGUAGES'])
 
 
 @app.route("/", strict_slashes=False)

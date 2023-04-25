@@ -13,7 +13,7 @@ class Config(object):
 
 app = Flask(__name__)
 babel = Babel(app,
-              locale_selector=Config.LANGUAGES[0],
+              locale_selector=Config['LANGUAGES'],
               timezone_selector='UTC')
 
 

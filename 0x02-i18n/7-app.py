@@ -7,7 +7,7 @@ import pytz
 from typing import Union, Dict
 
 
-class Config(object):
+class Config:
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -67,7 +67,7 @@ def get_timezone() -> str:
 @app.route("/", strict_slashes=False)
 def hello():
     """ A function to return HTML template """
-    return render_template('2-index.html')
+    return render_template('7-index.html')
 
 
 if __name__ == '__main__':

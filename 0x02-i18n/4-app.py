@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
-class Config(object):
+class Config:
     """ config class for flask app """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -28,7 +28,7 @@ def get_locale():
 @app.route("/", strict_slashes=False)
 def hello():
     """ A function to return HTML template """
-    return render_template('2-index.html')
+    return render_template('4-index.html')
 
 
 if __name__ == '__main__':

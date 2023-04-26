@@ -16,7 +16,6 @@ class Config:
 app = Flask(__name__)
 app.config.from_object(Config)
 app.url_map.strict_slashes = False
-babel = Babel(app)
 
 
 @babel.localeselector
@@ -30,7 +29,7 @@ def get_locale() -> str:
 def get_index() -> str:
     """The home/index page.
     """
-    return render_template('3-index.html')
+    return render_template('5-index.html')
 
 
 if __name__ == '__main__':
